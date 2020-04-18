@@ -6,7 +6,7 @@ import tkinter as tk
 
 
 def initGui():
-    w = 800 # width for the Tk root
+    w = 600 # width for the Tk root
     h = 500 # height for the Tk root
 
     root = tk.Tk()
@@ -22,8 +22,18 @@ def initGui():
     root.resizable(0, 0)
     #root.configure(bg='#9EA8B1')
 
-    inText = tk.Label(text="Input Text")
-    inText.grid(column=1, row=1)
+    inTitle = tk.Label(text="Input Text")
+    inTitle.place(x=100, y=20)
+
+    outTitle = tk.Label(text="Quantity of words")
+    outTitle.place(x=400, y=20)
+
+    inputText = tk.Text(root, width=80, height=20)
+    inputText.place(x=20, y=50)
+
+    #input text
+    #click button
+    #output text
 
     root.mainloop()
 
