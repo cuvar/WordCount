@@ -1,19 +1,54 @@
 #!/usr/bin/python
 
-#https://www.tutorialspoint.com/python/python_gui_programming.htm
-
+import re
 import tkinter as tk
 
 def count():
     
-    frequency_words = "Text"
-    
     textin= inputText.get("1.0","end-1c")
-    print(textin)
 
+    #array of all words
+    uneditedWords = textin.split()
+    regex = re.compile(r'[^-a-zA-Z0-9]', re.IGNORECASE)
+    
+    editedWords = []
+    #arrange strings
+    for word in uneditedWords:
+        w = regex.sub('', word)
+        editedWords.append(w)
+        print(w)
+
+    print('\n\n\n')
+    #counting strings
+    frequency = {}
+    
+    for w in editedWords:
+        i = 1
+        match = False
+
+        for key in frequency:
+            if w.casefold() == key:
+                match = True
+        if(match):
+            frequency[w.casefold()] += 1
+        else:
+            frequency.update({w.casefold() : i})
+
+    #sorting list
+    for x in sorted(frequency.keys()):
+        print('%s: %s' % (x, frequency[x]))
+    
+    #putting dict in a string for msg
+    s = ''
+    for x in sorted(frequency.keys()):
+        s += '%s: %s\n' % (x, frequency[x])
 
     #show in window
-    msg = tk.Message(root, text = frequency_words, width=250)
+
+    entry = tk.Entry(root, textvariable=s, state='readonly')
+    myscroll = tk.Scrollbar(root, orient='vertical', command=entry.xview)
+    entry.config(xscrollcommand=myscroll.set)
+    msg = tk.Message(root, text = s, width=250)
     msg.pack()
     msg.place(x=400, y=50)
 
@@ -64,8 +99,8 @@ def initGui():
 def main():
     initGui()
 
-
 # Main
 #    
 if __name__ == "__main__":
+
     main()
