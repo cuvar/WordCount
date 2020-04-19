@@ -4,21 +4,24 @@ import re
 import tkinter as tk
 
 def count():
-    
     textin= inputText.get("1.0","end-1c")
 
     #array of all words
     uneditedWords = textin.split()
-    regex = re.compile(r'[^-a-zA-Z0-9]', re.IGNORECASE)
-    
+    regex = re.compile(r"[^-a-zA-Z0-9]", re.IGNORECASE)
+
     editedWords = []
     #arrange strings
     for word in uneditedWords:
         w = regex.sub('', word)
-        editedWords.append(w)
-        print(w)
+        if(w== 'I\'m'):
+            editedWords.append('I')
+            editedWords.append('am')
+        else:
+            editedWords.append(w)
+        #print(w)
 
-    print('\n\n\n')
+    #print('\n\n\n')
     #counting strings
     frequency = {}
     
@@ -34,29 +37,34 @@ def count():
         else:
             frequency.update({w.casefold() : i})
 
-    #sorting list
-    for x in sorted(frequency.keys()):
-        print('%s: %s' % (x, frequency[x]))
+    frm = tk.Frame(root) 
+    frm.place(x=400, y=50, width=150, height=300)
+
+    scrollbar = tk.Scrollbar(root)
+    scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
+    lb = tk.Listbox(root, yscrollcommand = scrollbar.set, height=50, width=50)
     
-    #putting dict in a string for msg
+    
+    #putting dict in a listbox
     s = ''
+    i = 0
     for x in sorted(frequency.keys()):
-        s += '%s: %s\n' % (x, frequency[x])
+        s = '%s: %s' % (x, frequency[x])
+        lb.insert(i, s)
+        i+=1
+        #print(s)
+    lb.pack(side=tk.RIGHT, pady=50) 
+    scrollbar.config(command = lb.yview)
 
-    #show in window
 
-    entry = tk.Entry(root, textvariable=s, state='readonly')
-    myscroll = tk.Scrollbar(root, orient='vertical', command=entry.xview)
-    entry.config(xscrollcommand=myscroll.set)
-    msg = tk.Message(root, text = s, width=250)
-    msg.pack()
-    msg.place(x=400, y=50)
+
 
 
 def initGui():
+
     w = 700 # width for the Tk root
     h = 550 # height for the Tk root
-
+    
     global root
     root = tk.Tk()
 
@@ -77,7 +85,7 @@ def initGui():
     
     #text area
     global inputText
-    inputText = tk.Text(root, width=40, height=30)
+    inputText = tk.Text(root, width=40, height=28)
     inputText.place(x=20, y=50)
 
     #button
@@ -88,8 +96,6 @@ def initGui():
     #out title
     outTitle = tk.Label(text="Frequency of words")
     outTitle.place(x=475, y=20)
-
-    
 
     root.mainloop()
 
