@@ -23,7 +23,6 @@ def count():
 
     #print('\n\n\n')
     #counting strings
-    frequency = {}
     
     for w in editedWords:
         i = 1
@@ -37,35 +36,25 @@ def count():
         else:
             frequency.update({w.casefold() : i})
 
-    frm = tk.Frame(root) 
-    frm.place(x=400, y=50, width=150, height=300)
-
-    scrollbar = tk.Scrollbar(root)
-    scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
-    lb = tk.Listbox(root, yscrollcommand = scrollbar.set, height=50, width=50)
+        root.update()
     
-    
-    #putting dict in a listbox
-    s = ''
-    i = 0
-    for x in sorted(frequency.keys()):
-        s = '%s: %s' % (x, frequency[x])
-        lb.insert(i, s)
-        i+=1
-        #print(s)
-    lb.pack(side=tk.RIGHT, pady=50) 
-    scrollbar.config(command = lb.yview)
 
 
 
 
 
-def initGui():
 
+#Main
+def main():
+    global root
+    global inputText
+    global lb
     w = 700 # width for the Tk root
     h = 550 # height for the Tk root
-    
-    global root
+    global frequency
+
+    frequency = {}
+
     root = tk.Tk()
 
     ws = root.winfo_screenwidth() # width of the screen
@@ -79,34 +68,48 @@ def initGui():
     root.resizable(0, 0)
     #root.configure(bg='#9EA8B1')
 
-    #in title
+    #titles
     inTitle = tk.Label(text="Input Text")
     inTitle.place(x=150, y=20)
-    
+    outTitle = tk.Label(text="Frequency of words")
+    outTitle.place(x=475, y=20)
+
     #text area
-    global inputText
     inputText = tk.Text(root, width=40, height=28)
     inputText.place(x=20, y=50)
 
     #button
-    but = tk.Button(root, text="Count", command=count)
+    but = tk.Button(root, text="Count", command=count())
     but.pack()
     but.place(x=325, y=20)
 
-    #out title
-    outTitle = tk.Label(text="Frequency of words")
-    outTitle.place(x=475, y=20)
+
+    #adding frequencies of words
+    frm = tk.Frame(root) 
+    frm.place(x=400, y=50, width=150, height=300)
+
+    scrollbar = tk.Scrollbar(root)
+    scrollbar.pack(side = tk.RIGHT, fill = tk.Y)
+    lb = tk.Listbox(root, yscrollcommand = scrollbar.set, height=50, width=50)
+
+    if(frequency == {}):
+        lb.insert(0, 'Please insert text!')
+    else:
+        #putting dict in a listbox
+        i = 0
+        for x in sorted(frequency.keys()):
+            s = '%s: %s' % (x, frequency[x])
+            lb.insert(i, s)
+            i+=1
+
+    lb.pack(side=tk.RIGHT, pady=50) 
+    scrollbar.config(command = lb.yview)
+
+
 
     root.mainloop()
-
-
-
-#Main
-def main():
-    initGui()
 
 # Main
 #    
 if __name__ == "__main__":
-
     main()
