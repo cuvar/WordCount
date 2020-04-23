@@ -23,7 +23,9 @@ public class Main {
 
             //remove all symbols
             String w = word.replaceAll("[^-/§$%€a-zA-Z0-9]", "");
-            if (w.equals("m")) {
+            if (w.equals("")) {
+                editedWords.remove(w);
+            } else if (w.equals("m")) {
                 editedWords.add("am");
             } else if (w.equals("re")) {
                 editedWords.add("are");
@@ -70,10 +72,12 @@ public class Main {
     public static String[] sortByQuantity(String[] arr) {
         int f1, f2;
         for (int i = arr.length - 1; i >=1; i--) {
-            for (int j = 0; j < arr.length; j++){
-                f1 = arr[j];
-                f2 = arr[j+1].substring(arr[j+1].lastIndexOf("/") + 1));
-                if(f1 > f2){
+            for (int j = 0; j < arr.length - 1; j++){
+                String s1 = arr[j].substring(arr[j].lastIndexOf(":") + 2);
+                String s2 = arr[j+1].substring(arr[j+1].lastIndexOf(":") + 2);
+                f1 = Integer.parseInt(s1);
+                f2 = Integer.parseInt(s2);
+                if(f1 < f2){
                     String h = arr[j];
                     arr[j] = arr[j+1];
                     arr[j+1] = h;
