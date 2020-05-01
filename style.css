@@ -30,3 +30,9 @@
 textarea {
     resize: none;
 }
+
+label {
+    white-space: pre-wrap;
+    float: right;
+    padding: 0px 110px;
+}
