@@ -6,6 +6,10 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 
+
+const but = document.getElementById('but');
+but.addEventListner('click', go());
+
 let win;
 
 function createWindow () {
@@ -22,16 +26,23 @@ function createWindow () {
 
 }
 
+
 app.on('ready', createWindow);
 
 
+
+
+
 function go () {
+    
+    console.log("---------------------Here----------------------");
 
     output = count();
     var s = "";
     for (var entry in output) {
         s = entry + "\n";
     }
+    console.log(s);
     document.getElementById('lbl').innerHTML = s;
 }
 
