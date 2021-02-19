@@ -1,0 +1,12 @@
+{
+  "name": "your-app",
+  "version": "0.1.0",
+  "description": "An application for counting the frequency of words in texts",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^8.2.5"
+  }
+}
